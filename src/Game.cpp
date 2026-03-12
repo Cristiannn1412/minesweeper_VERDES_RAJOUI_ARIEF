@@ -6,6 +6,8 @@ Game::Game(size_t width, size_t height)
 {
     _number_of_mines = 0;
     _number_of_flags = 0;
+    _has_lost=false;
+    _has_won=false;
     _width = width;
     _height = height;
     _Grid.reserve(_width);
@@ -55,9 +57,11 @@ void Game::begin(size_t mines)
 void Game::discover(size_t x, size_t y)
 {
     size_t discovered = 0;
-    if (x >= 0 && x < _Grid.size() && y >= 0 && y < _Grid[x].size())
+    if (x < _Grid.size() && y < _Grid[x].size())
     {
         _Grid[x][y].discover(_Grid, x, y);
+          if ( _Grid[x][y].is_a_mine()  && _Grid[x][y].is_discoverd())
+             _has_lost=true;
         for (size_t i = 0; i < _Grid.size(); i++)
         {
             for (size_t j = 0; j < _Grid[x].size(); j++)
@@ -73,6 +77,8 @@ void Game::discover(size_t x, size_t y)
                 }
             }
         }
+          if ( discoverd ==( __width*_height - _number_of_mines)  &&  !_has_lost)
+             _has_won=true;
     }
 }
 void Game::draw()
@@ -107,19 +113,19 @@ void Game::draw()
 }
 int Game::get_width()
 {
-    return 1;
+    return _width ;
 }
 int Game::get_height()
 {
-    return 1;
+    return _height;
 }
 bool Game::has_lost()
 {
-    return false;
+    return _has_lost;
 }
 bool Game::has_won()
 {
-    return false;
+    return _has_won;
 }
 void Game::add_flag(size_t x, size_t y)
 {
