@@ -6,19 +6,23 @@ Cell::Cell()
     _mine = false;
     _discovered = false;
     _neighbours = 0;
+    _flag = false;
 }
+
 Cell::~Cell()
 {
-
 }
+
 void Cell::addMine(bool mine)
 {
-
+    _mine = mine;
 }
+
 int Cell::get_neighbours()
 {
-    return 0;
+    return _neighbours;
 }
+
 void Cell::get_neighbours(std::vector<std::vector<Cell>> &grid, size_t x, size_t y)
 {
     _neighbours = 0;
@@ -36,14 +40,17 @@ void Cell::get_neighbours(std::vector<std::vector<Cell>> &grid, size_t x, size_t
         }
     }
 }
+
 bool Cell::is_discovered()
 {
-    return false;
+    return _discovered;
 }
+
 bool Cell::is_a_mine()
 {
-    return true;
+    return _mine;
 }
+
 bool Cell::discover(std::vector<std::vector<Cell>> &grid, size_t x, size_t y)
 {
     if (is_a_mine())
@@ -64,15 +71,23 @@ bool Cell::discover(std::vector<std::vector<Cell>> &grid, size_t x, size_t y)
     }
     return false;
 }
+
 bool Cell::has_neighbours()
 {
-    return false;
+    return _neighbours > 0;
 }
+
 bool Cell::is_flagged()
 {
-    return false;
+    return _flag;
 }
+
 void Cell::flag()
 {
+    _flag = true;
+}
 
+void Cell::unflag()
+{
+    _flag = false;
 }

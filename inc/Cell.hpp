@@ -26,5 +26,4 @@ public:
     void unflag();
 };
 
-
 #endif // CELL_H_
